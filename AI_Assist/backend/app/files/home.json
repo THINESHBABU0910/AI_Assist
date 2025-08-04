@@ -1,0 +1,10 @@
+{ 
+  "application": {
+    "OneSifyAIPlatform": {
+      "home": "/",
+      "appfoundry": "/appfoundry",
+      "modelgarden": "/modelgarden",
+      "deployment": "/deployment"
+    }
+  }
+}

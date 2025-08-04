@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "AI Assist Backend API",
+    "description": "A dynamic FastAPI backend that serves AI application data from JSON/YAML configuration files.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "AI Assist Team",
+      "url": "https://github.com/your-org/ai-assist",
+      "email": "support@ai-assist.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8026",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.ai-assist.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/v1/get_pages/{id}": {
+      "get": {
+        "tags": ["discovery"],
+        "summary": "Get Pages Data",
+        "description": "Returns the full content of a specific discovery file based on the ID.",
+        "operationId": "get_discovery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The discovery ID to retrieve data for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["home", "appfoundry", "modelgarden"]
+            },
+            "examples": {
+              "home": {
+                "summary": "Home Discovery Configuration",
+                "description": "Returns the home configuration data including application routes"
+              },
+              "appfoundry": {
+                "summary": "Appfoundry Application",
+                "description": "Returns the full Appfoundry application configuration"
+              },
+              "modelgarden": {
+                "summary": "ModelGarden Application",
+                "description": "Returns the full ModelGarden application configuration"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with discovery data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "The complete JSON configuration for the requested discovery ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Discovery not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                },
+                "example": {
+                  "detail": "Discovery not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NotFoundError": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": ["detail"],
+        "example": {
+          "detail": "Discovery not found"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "discovery",
+      "description": "Operations related to discovery data retrieval"
+    }
+  ]
+}

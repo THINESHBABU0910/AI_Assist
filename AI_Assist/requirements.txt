@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+PyYAML
+python-json-logger
+httpx
+jinja2
+python-dotenv

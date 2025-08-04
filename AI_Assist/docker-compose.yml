@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  ai-assist-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-assist-api:latest
+    container_name: ai-assist-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${API_PORT:-8026}:${API_PORT:-8026}"
+    volumes:
+      - ./backend/app/files:/app/backend/app/files
+    networks:
+      - ai-assist-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_PORT:-8026}/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Optional database service (commented out)
+  # db:
+  #   image: postgres:15
+  #   container_name: ai-assist-db
+  #   restart: unless-stopped
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=ai_assist
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - ai-assist-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+  # Optional nginx reverse proxy (commented out)
+  # nginx:
+  #   image: nginx:1.25
+  #   container_name: ai-assist-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/conf.d:/etc/nginx/conf.d:ro
+  #     - ./nginx/certbot/conf:/etc/letsencrypt:ro
+  #     - ./nginx/certbot/www:/var/www/certbot:ro
+  #   depends_on:
+  #     - ai-assist-api
+  #   networks:
+  #     - ai-assist-network
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
+  #     interval: 30s
+  #     timeout: 5s
+  #     retries: 3
+
+networks:
+  ai-assist-network:
+    driver: bridge
+
+# Optional volumes (commented out)
+# volumes:
+#   postgres_data:

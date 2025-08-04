@@ -1,0 +1,1081 @@
+{
+  "modelgarden": {
+    "id": "modelgarden",
+    "name": "ModelGarden",
+    "version": "0.1.0",
+    "description": "AI Model Management and Deployment Platform",
+    "route": "/modelgarden",
+      "framework": "Next.js",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "ui_components": "Radix UI",
+      "port": 3005,
+      "production_port": 4004,
+      "technology_stack": {
+        "id": "technology_stack",
+        "frontend": {
+          "id": "frontend",
+          "framework": "Next.js 13.5.1",
+          "language": "TypeScript 5.2.2",
+          "styling": "Tailwind CSS 3.3.3",
+          "ui_components": "Radix UI",
+          "state_management": "React Hooks",
+          "form_handling": "React Hook Form",
+          "validation": "Zod"
+        },
+        "backend": {
+          "id": "backend",
+          "chat_backend": "FastAPI (Python)",
+          "ai_platform": "Sify AI Platform",
+          "api_base_url": "https://copilot-dev.sifymdp.digital/v1"
+        },
+        "development": {
+          "id": "development",
+          "package_manager": "npm",
+          "development_server": "Next.js dev server (port 3005)",
+          "chat_backend_server": "uvicorn (port 8000)",
+          "linting": "ESLint",
+          "formatting": "PostCSS"
+        }
+      },
+      "ui_automation": {
+        "id": "ui_automation",
+        "navigation": [
+          {
+            "id": "nav_action",
+            "action": "click",
+            "target": "navigation tabs",
+            "description": "Switch between Models, My Models, and Playground tabs"
+          }
+        ],
+        "filtering": [
+          {
+            "id": "filter_action_1",
+            "action": "click",
+            "target": "sidebar filters",
+            "description": "Filter models by capability, provider, or type"
+          },
+          {
+            "id": "filter_action_2",
+            "action": "type",
+            "target": "search input",
+            "description": "Search models by name or description"
+          },
+          {
+            "id": "filter_action_3",
+            "action": "click",
+            "target": "filter badges X button",
+            "description": "Remove active filters"
+          }
+        ],
+        "model_interaction": [
+          {
+            "id": "model_action_1",
+            "action": "click",
+            "target": "Subscribe button",
+            "description": "Open subscription modal for a model"
+          },
+          {
+            "id": "model_action_2",
+            "action": "click",
+            "target": "Deploy button",
+            "description": "Open deployment modal for a model"
+          },
+          {
+            "id": "model_action_3",
+            "action": "click",
+            "target": "model card",
+            "description": "View model details"
+          }
+        ],
+        "modal_interactions": [
+          {
+            "id": "modal_action_1",
+            "action": "fill form",
+            "target": "subscription modal",
+            "fields": [
+              "API Key Name"
+            ],
+            "description": "Fill subscription form"
+          },
+          {
+            "id": "modal_action_2",
+            "action": "fill form",
+            "target": "deployment modal",
+            "fields": [
+              "Deployment Configuration"
+            ],
+            "description": "Configure model deployment"
+          }
+        ],
+        "playground_interactions": [
+          {
+            "id": "playground_action_1",
+            "action": "select",
+            "target": "model selector",
+            "description": "Choose model for playground"
+          },
+          {
+            "id": "playground_action_2",
+            "action": "type",
+            "target": "chat input",
+            "description": "Send message to model"
+          },
+          {
+            "id": "playground_action_3",
+            "action": "click",
+            "target": "generate code button",
+            "description": "Generate code with model"
+          },
+          {
+            "id": "playground_action_4",
+            "action": "click",
+            "target": "generate image button",
+            "description": "Generate image with model"
+          }
+        ]
+      },
+      "workflows": {
+        "id": "workflows",
+        "deploy_model": {
+          "id": "deploy_model",
+          "steps": [
+            {
+              "id": "deploy_step_1",
+              "action": "click",
+              "target": "Deploy button"
+            },
+            {
+              "id": "deploy_step_2",
+              "action": "fill form",
+              "target": "deployment modal"
+            },
+            {
+              "id": "deploy_step_3",
+              "action": "click",
+              "target": "Confirm button"
+            }
+          ]
+        },
+        "chat_assistance": {
+          "id": "chat_assistance",
+          "steps": [
+            {
+              "id": "chat_step_1",
+              "action": "select",
+              "target": "model selector"
+            },
+            {
+              "id": "chat_step_2",
+              "action": "type",
+              "target": "chat input"
+            },
+            {
+              "id": "chat_step_3",
+              "action": "click",
+              "target": "send button"
+            }
+          ]
+        }
+      },
+      "pages": [
+        {
+          "id": "home",
+          "route": "/",
+          "title": "Home",
+          "summary": "Landing page with model overview and navigation",
+          "description": "Main dashboard showing model grid, filters, and navigation tabs",
+          "layout": {
+            "id": "home_layout",
+            "containers": [
+              "header",
+              "sidebar",
+              "main-content",
+              "filters",
+              "model-grid",
+              "pagination",
+              "footer"
+            ]
+          },
+          "components": [
+            "Header",
+            "Sidebar",
+            "ModelGrid",
+            "ModelFilters",
+            "Pagination",
+            "SubscribeModal",
+            "DeployModal"
+          ],
+          "navigation_tabs": [
+            {
+              "id": "models",
+              "name": "Models",
+              "route": "/?tab=models",
+              "description": "Browse all available AI models"
+            },
+            {
+              "id": "my-models",
+              "name": "My Models",
+              "route": "/?tab=my-models",
+              "description": "Manage subscribed and deployed models"
+            },
+            {
+              "id": "playground",
+              "name": "Playground",
+              "route": "/?tab=playground",
+              "description": "Interactive model testing and experimentation"
+            }
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_modelmetadata",
+              "method": "GET",
+              "path": "/data/modelmetadata.yaml",
+              "description": "Fetch all available models"
+            },
+            {
+              "id": "endpoint_capabilities",
+              "method": "GET",
+              "path": "/data/capabilities.yaml",
+              "description": "Fetch model capabilities for filtering"
+            },
+            {
+              "id": "endpoint_providers",
+              "method": "GET",
+              "path": "/data/providers.yaml",
+              "description": "Fetch model providers for filtering"
+            }
+          ],
+          "actions": [
+            {
+              "id": "filter_by_capability",
+              "name": "Filter by Capability",
+              "description": "Filter models by their capabilities",
+              "api_call": {
+                "id": "api_filter_by_capability",
+                "method": "GET",
+                "path": "/data/capabilities.yaml",
+                "params": [
+                  "capability"
+                ]
+              }
+            },
+            {
+              "id": "filter_by_provider",
+              "name": "Filter by Provider",
+              "description": "Filter models by their provider",
+              "api_call": {
+                "id": "api_filter_by_provider",
+                "method": "GET",
+                "path": "/data/providers.yaml",
+                "params": [
+                  "provider"
+                ]
+              }
+            },
+            {
+              "id": "search_models",
+              "name": "Search Models",
+              "description": "Search models by name or description",
+              "api_call": {
+                "id": "api_search_models",
+                "method": "GET",
+                "path": "/data/modelmetadata.yaml",
+                "params": [
+                  "search"
+                ]
+              }
+            },
+            {
+              "id": "subscribe_to_model",
+              "name": "Subscribe to Model",
+              "description": "Subscribe to a model via API",
+              "api_call": {
+                "id": "api_subscribe_to_model",
+                "method": "POST",
+                "path": "/api/models/subscribe",
+                "params": [
+                  "model_id",
+                  "api_key"
+                ]
+              }
+            },
+            {
+              "id": "deploy_model",
+              "name": "Deploy Model",
+              "description": "Deploy a model locally",
+              "api_call": {
+                "id": "api_deploy_model",
+                "method": "POST",
+                "path": "/api/models/deploy",
+                "params": [
+                  "model_id",
+                  "config"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "models",
+          "route": "/?tab=models",
+          "title": "Models",
+          "summary": "Browse and search all available AI models",
+          "description": "Comprehensive model catalog with filtering, search, and deployment options",
+          "layout": {
+            "id": "models_layout",
+            "containers": [
+              "header",
+              "sidebar",
+              "model-filters",
+              "model-grid",
+              "pagination",
+              "subscribe-modal",
+              "deploy-modal"
+            ]
+          },
+          "components": [
+            "Header",
+            "Sidebar",
+            "ModelFilters",
+            "ModelGrid",
+            "Pagination",
+            "SubscribeModal",
+            "DeployModal"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_model_details",
+              "method": "GET",
+              "path": "/api/models/{model_id}",
+              "description": "Fetch specific model details"
+            }
+          ],
+          "actions": [
+            {
+              "id": "view_model_details",
+              "name": "View Model Details",
+              "description": "Navigate to detailed model page",
+              "api_call": {
+                "id": "api_view_model_details",
+                "method": "GET",
+                "path": "/api/models/{model_id}",
+                "params": [
+                  "model_id"
+                ]
+              }
+            },
+            {
+              "id": "subscribe_model",
+              "name": "Subscribe to Model",
+              "description": "Subscribe to a model via API key",
+              "api_call": {
+                "id": "api_subscribe_model",
+                "method": "POST",
+                "path": "/api/models/subscribe",
+                "params": [
+                  "model_id",
+                  "api_key"
+                ]
+              }
+            },
+            {
+              "id": "deploy_model",
+              "name": "Deploy Model",
+              "description": "Deploy model locally",
+              "api_call": {
+                "id": "api_deploy_model_2",
+                "method": "POST",
+                "path": "/api/models/deploy",
+                "params": [
+                  "model_id",
+                  "deployment_config"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "my-models",
+          "route": "/?tab=my-models",
+          "title": "My Models",
+          "summary": "Manage subscribed and deployed models",
+          "description": "Dashboard for managing user's subscribed and deployed models with usage tracking",
+          "layout": {
+            "id": "my_models_layout",
+            "containers": [
+              "header",
+              "my-models-table",
+              "api-key-management",
+              "usage-stats",
+              "deployment-status"
+            ]
+          },
+          "components": [
+            "Header",
+            "MyModelsTable",
+            "ApiKeyManagementModal",
+            "UsageStats",
+            "DeploymentStatus"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_api_keys",
+              "method": "GET",
+              "path": "/api/user/api-keys",
+              "description": "Fetch API keys for subscribed models"
+            },
+            {
+              "id": "endpoint_usage",
+              "method": "GET",
+              "path": "/api/user/usage/{model_id}",
+              "description": "Fetch usage statistics for a model"
+            }
+          ],
+          "actions": [
+            {
+              "id": "manage_api_keys",
+              "name": "Manage API Keys",
+              "description": "View and manage API keys for subscribed models",
+              "api_call": {
+                "id": "api_manage_api_keys",
+                "method": "GET",
+                "path": "/api/user/api-keys",
+                "params": []
+              }
+            },
+            {
+              "id": "update_api_key",
+              "name": "Update API Key",
+              "description": "Update API key for a subscribed model",
+              "api_call": {
+                "id": "api_update_api_key",
+                "method": "PUT",
+                "path": "/api/user/api-keys/{key_id}",
+                "params": [
+                  "key_id",
+                  "new_api_key"
+                ]
+              }
+            },
+            {
+              "id": "view_usage",
+              "name": "View Usage Statistics",
+              "description": "View usage statistics for a model",
+              "api_call": {
+                "id": "api_view_usage",
+                "method": "GET",
+                "path": "/api/user/usage/{model_id}",
+                "params": [
+                  "model_id"
+                ]
+              }
+            },
+            {
+              "id": "deploy_model",
+              "name": "Deploy Model",
+              "description": "Deploy a model locally",
+              "api_call": {
+                "id": "api_deploy_model_3",
+                "method": "POST",
+                "path": "/api/models/deploy",
+                "params": [
+                  "model_id",
+                  "deployment_config"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "playground",
+          "route": "/?tab=playground",
+          "title": "Playground",
+          "summary": "Interactive model testing and experimentation",
+          "description": "Interactive playground for testing models with real-time chat, code generation, and image creation",
+          "layout": {
+            "id": "playground_layout",
+            "containers": [
+              "header",
+              "model-selector",
+              "chat-interface",
+              "code-editor",
+              "image-generator",
+              "output-display"
+            ]
+          },
+          "components": [
+            "Header",
+            "ModelSelector",
+            "ChatInterface",
+            "CodeEditor",
+            "ImageGenerator",
+            "OutputDisplay"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_playground_chat",
+              "method": "POST",
+              "path": "/api/playground/chat",
+              "description": "Send a message to the selected model"
+            },
+            {
+              "id": "endpoint_playground_code",
+              "method": "POST",
+              "path": "/api/playground/code",
+              "description": "Generate code using the selected model"
+            },
+            {
+              "id": "endpoint_playground_image",
+              "method": "POST",
+              "path": "/api/playground/image",
+              "description": "Generate image using the selected model"
+            },
+            {
+              "id": "endpoint_switch_model",
+              "method": "GET",
+              "path": "/api/models/{model_id}",
+              "description": "Switch to a different model in playground"
+            }
+          ],
+          "actions": [
+            {
+              "id": "send_chat_message",
+              "name": "Send Chat Message",
+              "description": "Send a message to the selected model",
+              "api_call": {
+                "id": "api_send_chat_message",
+                "method": "POST",
+                "path": "/api/playground/chat",
+                "params": [
+                  "model_id",
+                  "message"
+                ]
+              }
+            },
+            {
+              "id": "generate_code",
+              "name": "Generate Code",
+              "description": "Generate code using the selected model",
+              "api_call": {
+                "id": "api_generate_code",
+                "method": "POST",
+                "path": "/api/playground/code",
+                "params": [
+                  "model_id",
+                  "prompt"
+                ]
+              }
+            },
+            {
+              "id": "generate_image",
+              "name": "Generate Image",
+              "description": "Generate image using the selected model",
+              "api_call": {
+                "id": "api_generate_image",
+                "method": "POST",
+                "path": "/api/playground/image",
+                "params": [
+                  "model_id",
+                  "prompt"
+                ]
+              }
+            },
+            {
+              "id": "switch_model",
+              "name": "Switch Model",
+              "description": "Switch to a different model in playground",
+              "api_call": {
+                "id": "api_switch_model",
+                "method": "GET",
+                "path": "/api/models/{model_id}",
+                "params": [
+                  "model_id"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "models": [
+        {
+          "id": "meta-llama-Llama-3-70B-Instruct",
+          "name": "LLaMA 3 70B Instruct",
+          "original_name": "meta-llama/Llama-3-70B-Instruct",
+          "provider": "Meta",
+          "type": "hosted",
+          "capabilities": [
+            "text-generation",
+            "text-summarization",
+            "code-generation",
+            "question-answering",
+            "image"
+          ],
+          "description": "Meta's Llama 3 70B Instruct is a large language model optimized for following instructions",
+          "logo": "/data/meta-llama-Llama-3-70B-Instruct/assets/llama_3.png"
+        },
+        {
+          "id": "meta-llama-Llama-3-8B",
+          "name": "LLaMA 3 8B",
+          "original_name": "meta-llama/Llama-3-8B",
+          "provider": "Meta",
+          "type": "hosted",
+          "capabilities": [
+            "text-generation",
+            "text-summarization",
+            "code-generation",
+            "question-answering"
+          ],
+          "description": "Meta's Llama 3 8B is a compact, efficient language model",
+          "logo": "/data/meta-llama-Llama-3-8B/assets/llama_3.png"
+        }
+      ],
+      "model_types": [
+        {
+          "id": "subscription",
+          "name": "Subscription",
+          "description": "Models available via API subscription"
+        },
+        {
+          "id": "hosted",
+          "name": "Hosted",
+          "description": "Models that can be deployed locally"
+        },
+        {
+          "id": "both",
+          "name": "Both",
+          "description": "Models available both via subscription and local deployment"
+        }
+      ],
+      "capabilities": [
+        {
+          "id": "text-generation",
+          "name": "Text Generation",
+          "description": "Generate human-like text for various purposes",
+          "icon": "📝"
+        },
+        {
+          "id": "code-generation",
+          "name": "Code Generation",
+          "description": "Generate and debug code in multiple languages",
+          "icon": "💻"
+        },
+        {
+          "id": "embedding",
+          "name": "Embedding",
+          "description": "Generate vector embeddings for text",
+          "icon": "🕸️"
+        },
+        {
+          "id": "reranker",
+          "name": "Reranker",
+          "description": "Rerank search results or documents",
+          "icon": "🔀"
+        },
+        {
+          "id": "voice",
+          "name": "Voice",
+          "description": "Voice synthesis and processing",
+          "icon": "🔊"
+        },
+        {
+          "id": "speech-to-text",
+          "name": "Speech to Text",
+          "description": "Convert audio to text transcriptions",
+          "icon": "🎤"
+        },
+        {
+          "id": "image-generation",
+          "name": "Image Generation",
+          "description": "Generate images from text descriptions",
+          "icon": "🎨"
+        },
+        {
+          "id": "object-detection",
+          "name": "Object Detection",
+          "description": "Detect objects in images",
+          "icon": "🔎"
+        },
+        {
+          "id": "image-upscaling",
+          "name": "Image Upscaling",
+          "description": "Upscale images to higher resolution",
+          "icon": "🖼️"
+        }
+      ],
+      "providers": [
+        {
+          "id": "Meta",
+          "name": "Meta",
+          "logo": "🦙",
+          "description": "Meta's open-source AI models and research"
+        },
+        {
+          "id": "MiniCPM",
+          "name": "MiniCPM",
+          "logo": "🦙",
+          "description": "MiniCPM vision and language models"
+        },
+        {
+          "id": "Mistral AI",
+          "name": "Mistral AI",
+          "logo": "⭐",
+          "description": "European AI company focused on open and efficient models"
+        },
+        {
+          "id": "Microsoft",
+          "name": "Microsoft",
+          "logo": "🪟",
+          "description": "Microsoft's AI models and research"
+        },
+        {
+          "id": "TinyLlama",
+          "name": "TinyLlama",
+          "logo": "🐐",
+          "description": "TinyLlama small language models"
+        },
+        {
+          "id": "HuggingFaceH4",
+          "name": "HuggingFaceH4",
+          "logo": "🤗",
+          "description": "HuggingFaceH4 open models"
+        },
+        {
+          "id": "BAAI",
+          "name": "BAAI",
+          "logo": "🔬",
+          "description": "BAAI embedding and reranker models"
+        },
+        {
+          "id": "JinaAI",
+          "name": "JinaAI",
+          "logo": "🧬",
+          "description": "JinaAI embedding and reranker models"
+        },
+        {
+          "id": "CosyVoice",
+          "name": "CosyVoice",
+          "logo": "🔊",
+          "description": "CosyVoice voice models"
+        },
+        {
+          "id": "OpenAI",
+          "name": "OpenAI",
+          "logo": "🤖",
+          "description": "OpenAI speech and language models"
+        },
+        {
+          "id": "StabilityAI",
+          "name": "StabilityAI",
+          "logo": "🖼️",
+          "description": "StabilityAI image generation models"
+        },
+        {
+          "id": "Ultralytics",
+          "name": "Ultralytics",
+          "logo": "📦",
+          "description": "Ultralytics object detection models"
+        },
+        {
+          "id": "nateraw",
+          "name": "nateraw",
+          "logo": "🔍",
+          "description": "nateraw image upscaling models"
+        }
+      ],
+      "api_endpoints": {
+        "id": "api_endpoints",
+        "models": [
+          {
+            "id": "models_endpoint",
+            "method": "GET",
+            "path": "/data/modelmetadata.yaml",
+            "description": "Fetch all available models",
+            "query_params": [
+              {
+                "id": "param_search",
+                "name": "search",
+                "type": "string",
+                "description": "Search term for filtering models"
+              },
+              {
+                "id": "param_capability",
+                "name": "capability",
+                "type": "string",
+                "description": "Filter by model capability"
+              },
+              {
+                "id": "param_provider",
+                "name": "provider",
+                "type": "string",
+                "description": "Filter by model provider"
+              }
+            ],
+            "response": {
+              "id": "response_models",
+              "models": "array",
+              "total": "integer"
+            }
+          },
+          {
+            "id": "model_details_endpoint",
+            "method": "GET",
+            "path": "/api/models/{model_id}",
+            "description": "Fetch specific model details",
+            "path_params": [
+              {
+                "id": "param_model_id",
+                "name": "model_id",
+                "type": "string",
+                "description": "Unique model identifier"
+              }
+            ],
+            "response": {
+              "id": "response_model",
+              "model": "object"
+            }
+          }
+        ],
+        "deployments": [
+          {
+            "id": "deployments_endpoint",
+            "method": "GET",
+            "path": "/api/models/deployments",
+            "description": "Fetch deployment status with pagination",
+            "query_params": [
+              {
+                "id": "param_limit",
+                "name": "limit",
+                "type": "integer",
+                "description": "Number of deployments to fetch"
+              },
+              {
+                "id": "param_last_id",
+                "name": "last_id",
+                "type": "string",
+                "description": "Cursor for pagination"
+              }
+            ],
+            "response": {
+              "id": "response_deployments",
+              "deployments": "array",
+              "next_cursor": "string"
+            }
+          },
+          {
+            "id": "deployment_details_endpoint",
+            "method": "GET",
+            "path": "/api/models/deployment/{deployment_id}",
+            "description": "Fetch specific deployment details",
+            "path_params": [
+              {
+                "id": "param_deployment_id",
+                "name": "deployment_id",
+                "type": "string",
+                "description": "Unique deployment identifier"
+              }
+            ],
+            "response": {
+              "id": "response_deployment",
+              "deployment": "object"
+            }
+          }
+        ],
+        "chat": [
+          {
+            "id": "chat_endpoint",
+            "method": "POST",
+            "path": "/api/playground/chat",
+            "description": "AI chat assistance endpoint for playground",
+            "body_params": [
+              {
+                "id": "param_message",
+                "name": "message",
+                "type": "string",
+                "description": "User message for AI assistance"
+              },
+              {
+                "id": "param_model_id",
+                "name": "model_id",
+                "type": "string",
+                "description": "Selected model identifier"
+              }
+            ],
+            "response": {
+              "id": "response_chat",
+              "answer": "string",
+              "conversation_id": "string",
+              "total_tokens": "integer",
+              "cost": "number"
+            }
+          }
+        ]
+      },
+      "chat_features": {
+        "id": "chat_features",
+        "cloud_assist": {
+          "id": "cloud_assist",
+          "description": "Sidebar chat interface with AI assistance",
+          "features": [
+            "Toggle with sparkle icon in header",
+            "Minimizable sidebar",
+            "Real-time typing indicators",
+            "Auto-scroll to latest messages",
+            "Error handling for API failures",
+            "Message history management"
+          ]
+        },
+        "assist_console": {
+          "id": "assist_console",
+          "description": "Floating chat interface at bottom center",
+          "features": [
+            "Appears at bottom center of screen",
+            "Can be moved to sidebar",
+            "Closable with X button",
+            "Same chat functionality as CloudAssist"
+          ]
+        }
+      },
+      "deployment": {
+        "id": "deployment",
+        "docker": {
+          "id": "docker",
+          "enabled": true,
+          "dockerfile": "Dockerfile",
+          "dockerignore": ".dockerignore",
+          "image": "node:20-slim",
+          "port": 4004,
+          "environment": {
+            "id": "environment",
+            "NODE_ENV": "production",
+            "PORT": 4004,
+            "NEXT_PUBLIC_API_URL": "http://172.16.10.4:5005/api",
+            "NEXT_PUBLIC_API_SECRET": "S1qWmeKmDJV9ye+q/91l88lj6vqzfT5sembmutr6afv0lRcsL9cEtgwN"
+          }
+        },
+        "pm2": {
+          "id": "pm2",
+          "name": "modelgarden",
+          "script": "npm",
+          "args": "start",
+          "instances": 1,
+          "exec_mode": "fork"
+        },
+        "build_commands": [
+          "npm install",
+          "npm run build"
+        ],
+        "start_commands": [
+          "npm start",
+          "pm2-runtime pm2.json"
+        ],
+        "environment_variables": [
+          "NEXT_PUBLIC_API_URL",
+          "NEXT_PUBLIC_API_SECRET"
+        ]
+      },
+      "automation_commands": {
+        "id": "automation_commands",
+        "start_development": {
+          "id": "start_development",
+          "command": "npm run dev",
+          "description": "Start development server on port 3005",
+          "working_directory": "/home/durai/AIPLATFORM/ModelGarden"
+        },
+        "start_production": {
+          "id": "start_production",
+          "command": "docker build -t modelgarden . && docker run -p 4004:4004 modelgarden",
+          "description": "Build and run production Docker container",
+          "working_directory": "/home/durai/AIPLATFORM/ModelGarden"
+        },
+        "install_dependencies": {
+          "id": "install_dependencies",
+          "command": "npm install",
+          "description": "Install Node.js dependencies",
+          "working_directory": "/home/durai/AIPLATFORM/ModelGarden"
+        },
+        "build_application": {
+          "id": "build_application",
+          "command": "npm run build",
+          "description": "Build the Next.js application",
+          "working_directory": "/home/durai/AIPLATFORM/ModelGarden"
+        }
+      },
+      "features": [
+        "Model browsing and filtering",
+        "Model subscription and deployment",
+        "Interactive playground",
+        "API key management",
+        "Usage tracking",
+        "Real-time chat interface",
+        "Code generation",
+        "Image generation",
+        "Responsive design",
+        "Dark/light theme support"
+      ],
+      "file_structure": {
+        "id": "file_structure",
+        "app": [
+          "page.tsx (main application page)",
+          "layout.tsx (root layout)",
+          "globals.css (global styles)"
+        ],
+        "components": {
+          "id": "components",
+          "main": [
+            "model-card.tsx (individual model display)",
+            "models-grid.tsx (grid layout for models)",
+            "model-filters.tsx (filtering interface)",
+            "model-sidebar.tsx (sidebar navigation)",
+            "subscribe-modal.tsx (subscription modal)",
+            "deploy-modal.tsx (deployment modal)"
+          ],
+          "my_models": [
+            "my-models-table.tsx (user models table)",
+            "api-key-management-modal.tsx (API key management)"
+          ],
+          "playground": [
+            "Playground.tsx (main playground component)",
+            "ModelSelector.tsx (model selection)",
+            "ChatInterface.tsx (chat interface)",
+            "SystemPromptInput.tsx (system prompt input)",
+            "ModelParameters.tsx (model parameters)"
+          ],
+          "layout": [
+            "header.tsx (application header)"
+          ],
+          "ui": [
+            "button.tsx, input.tsx, badge.tsx, etc. (UI components)"
+          ]
+        },
+        "public": {
+          "id": "public",
+          "data": [
+            "modelmetadata.yaml (model data)",
+            "capabilities.yaml (capability definitions)",
+            "providers.yaml (provider definitions)"
+          ]
+        },
+        "lib": [
+          "types.ts (TypeScript type definitions)",
+          "hooks/useModels.ts (data management hook)",
+          "utils.ts (utility functions)"
+        ],
+        "data": [
+          "Model-specific data directories"
+        ]
+      },
+      "summary": {
+        "id": "summary",
+        "total_pages": 4,
+        "total_models": 2,
+        "model_providers": 14,
+        "capabilities": 9,
+        "deployment_options": "Docker, PM2",
+        "framework": "Next.js with TypeScript",
+        "responsive_design": true,
+        "real_time_features": true,
+        "interactive_playground": true
+      }
+    }
+  }

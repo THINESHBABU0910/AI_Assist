@@ -1,0 +1,813 @@
+ {
+ "appfoundry": {
+      "id": "appfoundry",
+      "name": "Appfoundry",
+      "version": "0.1.0",
+      "description": "AI-powered application deployment platform with blueprint management",
+      "route": "/appfoundry",
+      "framework": "Next.js",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "ui_components": "Radix UI",
+      "port": 3003,
+      "production_port": 3003,
+      "technology_stack": {
+        "id": "technology_stack",
+        "frontend": {
+          "id": "frontend",
+          "framework": "Next.js 13.5.1",
+          "language": "TypeScript 5.2.2",
+          "styling": "Tailwind CSS 3.3.3",
+          "ui_components": "Radix UI",
+          "state_management": "React Hooks",
+          "form_handling": "React Hook Form",
+          "validation": "Zod"
+        },
+        "backend": {
+          "id": "backend",
+          "chat_backend": "FastAPI (Python)",
+          "ai_platform": "Sify AI Platform",
+          "api_base_url": "https://copilot-dev.sifymdp.digital/v1"
+        },
+        "development": {
+          "id": "development",
+          "package_manager": "npm",
+          "development_server": "Next.js dev server (port 3003)",
+          "chat_backend_server": "uvicorn (port 8000)",
+          "linting": "ESLint",
+          "formatting": "PostCSS"
+        }
+      },
+      "ui_automation": {
+        "id": "ui_automation",
+        "selectors": [
+          {
+            "id": "deploy-button",
+            "selector": "button:contains('Deploy')",
+            "action": "click",
+            "description": "Deploy application button"
+          },
+          {
+            "id": "details-button",
+            "selector": "button:contains('Details')",
+            "action": "click",
+            "description": "View application details"
+          },
+          {
+            "id": "search-input",
+            "selector": "input[placeholder*='search']",
+            "action": "input",
+            "description": "Search applications input in header search bar"
+          },
+          {
+            "id": "chat-input",
+            "selector": "textarea[placeholder*='message']",
+            "action": "input",
+            "description": "Chat message input"
+          },
+          {
+            "id": "home-link",
+            "selector": "a[href='/']",
+            "action": "click",
+            "description": "App Foundry logo/home link"
+          },
+          {
+            "id": "my-blueprints-nav",
+            "selector": "a[href='/my-blueprints']",
+            "action": "click",
+            "description": "My Blueprints navigation link"
+          },
+          {
+            "id": "cloud-assist-toggle",
+            "selector": "button[title='Open Cloud Assist']",
+            "action": "click",
+            "description": "Toggle CloudAssist sidebar"
+          },
+          {
+            "id": "assist-console-toggle",
+            "selector": "button[title='Open Center Chat']",
+            "action": "click",
+            "description": "Toggle AssistConsole floating chat"
+          },
+          {
+            "id": "deploy-modal-confirm",
+            "selector": "button:contains('Confirm')",
+            "action": "click",
+            "description": "Confirm deployment in modal"
+          }
+        ]
+      },
+      "workflows": {
+        "id": "workflows",
+        "deploy_application": {
+          "id": "deploy_application",
+          "steps": [
+            {
+              "id": "deploy_step_1",
+              "action": "click",
+              "target": "button:contains('Deploy')"
+            },
+            {
+              "id": "deploy_step_2",
+              "action": "wait",
+              "target": "div[role='dialog']"
+            },
+            {
+              "id": "deploy_step_3",
+              "action": "click",
+              "target": "button:contains('Confirm')"
+            }
+          ]
+        },
+        "chat_assistance": {
+          "id": "chat_assistance",
+          "steps": [
+            {
+              "id": "chat_step_1",
+              "action": "click",
+              "target": "button[title='Open Cloud Assist']"
+            },
+            {
+              "id": "chat_step_2",
+              "action": "input",
+              "target": "textarea[placeholder*='message']"
+            },
+            {
+              "id": "chat_step_3",
+              "action": "click",
+              "target": "button[aria-label='Send']"
+            }
+          ]
+        }
+      },
+      "pages": [
+        {
+          "id": "home",
+          "route": "/appfoundry",
+          "title": "Home",
+          "summary": "Landing page with blueprint overview and AI assistance",
+          "description": "Main dashboard showing available blueprints, deployment status, and AI chat assistance",
+                  "layout": {
+          "id": "home_layout",
+          "containers": [
+            "header",
+            "sidebar",
+            "main-content",
+            "cloud-assist",
+            "assist-console"
+          ],
+          "search_bar": {
+            "id": "header_search_bar",
+            "location": "header",
+            "component": "SearchBar",
+            "placeholder": "Search blueprints...",
+            "keyboard_shortcut": "Ctrl+K"
+          }
+        },
+          "components": [
+            "Header",
+            "Sidebar",
+            "BlueprintsSection",
+            "CloudAssist",
+            "AssistConsole",
+            "SearchBar"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_applications",
+              "method": "GET",
+              "path": "/api/applications",
+              "description": "Fetch available blueprint applications"
+            },
+            {
+              "id": "endpoint_deployments",
+              "method": "GET",
+              "path": "/api/deployments",
+              "description": "Fetch deployment status"
+            },
+            {
+              "id": "endpoint_chat",
+              "method": "POST",
+              "path": "/api/chat/ask",
+              "description": "AI chat assistance"
+            }
+          ],
+          "actions": [
+            {
+              "id": "search_blueprints",
+              "name": "Search Blueprints",
+              "description": "Search through available blueprint applications using the search bar in the header",
+              "api_call": {
+                "id": "api_search_blueprints",
+                "method": "GET",
+                "path": "/api/applications",
+                "params": [
+                  "search",
+                  "category",
+                  "page",
+                  "pageSize"
+                ]
+              },
+              "ui_component": "SearchBar",
+              "features": [
+                "Debounced search with 300ms delay",
+                "Keyboard shortcut (Ctrl+K) to focus",
+                "Clear button when search has content",
+                "Real-time filtering of application cards",
+                "Search placeholder: 'Search blueprints...'"
+              ]
+            },
+            {
+              "id": "deploy_application",
+              "name": "Deploy Application",
+              "description": "Deploy a selected blueprint",
+              "api_call": {
+                "id": "api_deploy_application",
+                "method": "POST",
+                "path": "/api/deployments",
+                "params": [
+                  "blueprint_id",
+                  "deployment_config"
+                ]
+              }
+            },
+            {
+              "id": "chat_assistance",
+              "name": "AI Chat Assistance",
+              "description": "Get AI-powered help and guidance",
+              "api_call": {
+                "id": "api_chat_assistance",
+                "method": "POST",
+                "path": "/api/chat/ask",
+                "params": [
+                  "question"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "my-blueprints",
+          "route": "/my-blueprints",
+          "title": "My Blueprints",
+          "summary": "Manage and view deployed applications",
+          "description": "Page to view and manage all deployed blueprint applications with status tracking",
+          "layout": {
+            "id": "my_blueprints_layout",
+            "containers": [
+              "header",
+              "deployment-list",
+              "search-filter",
+              "pagination"
+            ]
+          },
+          "components": [
+            "Header",
+            "DeploymentCard",
+            "TableRow",
+            "StatusBadge"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_user_deployments",
+              "method": "GET",
+              "path": "/api/deployments",
+              "description": "Fetch user deployments with pagination"
+            }
+          ],
+          "actions": [
+            {
+              "id": "view_deployments",
+              "name": "View Deployments",
+              "description": "List all user deployments",
+              "api_call": {
+                "id": "api_view_deployments",
+                "method": "GET",
+                "path": "/api/deployments",
+                "params": [
+                  "limit",
+                  "last_id"
+                ]
+              }
+            },
+            {
+              "id": "search_deployments",
+              "name": "Search Deployments",
+              "description": "Search through deployments",
+              "api_call": {
+                "id": "api_search_deployments",
+                "method": "GET",
+                "path": "/api/deployments",
+                "params": [
+                  "search",
+                  "status",
+                  "limit"
+                ]
+              }
+            },
+            {
+              "id": "get_deployment_details",
+              "name": "Get Deployment Details",
+              "description": "Fetch specific deployment information",
+              "api_call": {
+                "id": "api_get_deployment_details",
+                "method": "GET",
+                "path": "/api/deployment/{deployment_id}",
+                "params": [
+                  "deployment_id"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "details",
+          "route": "/details/{id}",
+          "title": "Application Details",
+          "summary": "View detailed blueprint information",
+          "description": "Detailed view of a blueprint with architecture information and deployment options",
+          "layout": {
+            "id": "details_layout",
+            "containers": [
+              "header",
+              "hero-section",
+              "overview-content",
+              "architecture-gallery",
+              "deploy-modal"
+            ]
+          },
+          "components": [
+            "HeaderClient",
+            "ArchImage",
+            "MarkdownRenderer",
+            "ArchitectureGallery",
+            "DeployButtonWithModal",
+            "DeployModal"
+          ],
+          "endpoints": [
+            {
+              "id": "endpoint_application_details",
+              "method": "GET",
+              "path": "/api/applications/{id}",
+              "description": "Fetch specific application details"
+            }
+          ],
+          "actions": [
+            {
+              "id": "deploy_blueprint",
+              "name": "Deploy Blueprint",
+              "description": "Deploy the selected blueprint",
+              "api_call": {
+                "id": "api_deploy_blueprint",
+                "method": "POST",
+                "path": "/api/deployments",
+                "params": [
+                  "blueprint_id",
+                  "deployment_config"
+                ]
+              }
+            },
+            {
+              "id": "view_github",
+              "name": "View on GitHub",
+              "description": "Open blueprint repository on GitHub",
+              "api_call": {
+                "id": "api_view_github",
+                "method": "GET",
+                "path": "external",
+                "params": [
+                  "github_url"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "blueprints": [
+        {
+          "id": "spam-detection",
+          "name": "Spam Detection Using Logistic Regression",
+          "version": "1.0.0",
+          "description": "Classify incoming emails as spam or not by analyzing word frequency patterns",
+          "category": [
+            "BFSI"
+          ],
+          "tags": [
+            "AI Models",
+            "Inference",
+            "Cloud",
+            "Ml Ops"
+          ],
+          "features": [
+            "Logistic Regression Algorithm",
+            "Bag-of-Words (BOW)",
+            "Email Classification",
+            "Scikit-learn, CPU"
+          ],
+          "system_requirements": [
+            "Operating System: Ubuntu 22.04 OS / Windows 10/11",
+            "RAM: 8GB (16GB recommended)",
+            "CPU: CPU-intensive application",
+            "GPU: Not required"
+          ],
+          "software_used": [
+            "Python 3.10+",
+            "Scikit-learn",
+            "Pandas",
+            "Numpy",
+            "Jupyter Notebook"
+          ]
+        },
+        {
+          "id": "WeatherPlay",
+          "name": "WeatherPlay",
+          "version": "1.0.0",
+          "description": "Weather-based application",
+          "category": [
+            "Machine Learning"
+          ],
+          "tags": [
+            "Templates",
+            "Workflows",
+            "Enterprise"
+          ]
+        },
+        {
+          "id": "stockprice",
+          "name": "Stock Price Prediction",
+          "version": "1.0.0",
+          "description": "Stock price prediction application",
+          "category": [
+            "Machine Learning"
+          ],
+          "tags": [
+            "GPU",
+            "Computing",
+            "Infrastructure"
+          ]
+        },
+        {
+          "id": "mappy",
+          "name": "Mappy - Geographic Clustering",
+          "version": "1.0.0",
+          "description": "Geographic clustering and route optimization",
+          "category": [
+            "Machine Learning"
+          ],
+          "tags": [
+            "Geo-Clustering",
+            "Route Optimization",
+            "Distribution"
+          ]
+        },
+        {
+          "id": "graphmate",
+          "name": "GraphMate - AI Graph Analysis",
+          "version": "1.0.0",
+          "description": "AI-powered graph analysis and visualization",
+          "category": [
+            "GenAI"
+          ],
+          "tags": [
+            "Artificial Intelligence",
+            "LLM",
+            "Apache Superset",
+            "AI Agents"
+          ]
+        },
+        {
+          "id": "ai-training-platform",
+          "name": "AI Training Platform",
+          "version": "1.0.0",
+          "description": "Platform for AI model training",
+          "category": [
+            "Jupyter Notebook"
+          ],
+          "tags": [
+            "Training",
+            "Machine Learning",
+            "Platform",
+            "Notebook"
+          ]
+        },
+        {
+          "id": "data-pipeline",
+          "name": "Data Pipeline",
+          "version": "1.0.0",
+          "description": "ETL data pipeline application",
+          "category": [
+            "Manufacturing"
+          ],
+          "tags": [
+            "Data",
+            "Pipeline",
+            "ETL"
+          ]
+        },
+        {
+          "id": "power-optimization",
+          "name": "Power Optimization",
+          "version": "1.0.0",
+          "description": "Power optimization application",
+          "category": [
+            "Enterprise"
+          ],
+          "tags": [
+            "Power",
+            "Optimization",
+            "Energy"
+          ]
+        },
+        {
+          "id": "demand-forecasting",
+          "name": "Demand Forecasting",
+          "version": "1.0.0",
+          "description": "Demand forecasting application",
+          "category": [
+            "Enterprise"
+          ],
+          "tags": [
+            "Forecasting",
+            "Demand",
+            "Analytics"
+          ]
+        },
+        {
+          "id": "predictive-maintenance",
+          "name": "Predictive Maintenance",
+          "version": "1.0.0",
+          "description": "Predictive maintenance application",
+          "category": [
+            "Enterprise"
+          ],
+          "tags": [
+            "Maintenance",
+            "Predictive",
+            "IoT"
+          ]
+        }
+      ],
+      "api_endpoints": {
+        "id": "api_endpoints",
+        "applications": [
+          {
+            "id": "applications_endpoint",
+            "method": "GET",
+            "path": "/api/applications",
+            "description": "Fetch available blueprint applications",
+            "query_params": [
+              {
+                "id": "param_category",
+                "name": "category",
+                "type": "string",
+                "description": "Filter by category (all, Machine Learning, GenAI, etc.)"
+              },
+              {
+                "id": "param_search",
+                "name": "search",
+                "type": "string",
+                "description": "Search term for filtering applications"
+              },
+              {
+                "id": "param_page",
+                "name": "page",
+                "type": "integer",
+                "description": "Page number for pagination"
+              },
+              {
+                "id": "param_pageSize",
+                "name": "pageSize",
+                "type": "integer",
+                "description": "Number of items per page"
+              }
+            ],
+            "response": {
+              "id": "response_applications",
+              "applications": "array",
+              "total": "integer"
+            }
+          }
+        ],
+        "deployments": [
+          {
+            "id": "deployments_endpoint",
+            "method": "GET",
+            "path": "/api/deployments",
+            "description": "Fetch deployment status with pagination",
+            "query_params": [
+              {
+                "id": "param_limit",
+                "name": "limit",
+                "type": "integer",
+                "description": "Number of deployments to fetch"
+              },
+              {
+                "id": "param_last_id",
+                "name": "last_id",
+                "type": "string",
+                "description": "Cursor for pagination"
+              }
+            ],
+            "response": {
+              "id": "response_deployments",
+              "deployments": "array",
+              "next_cursor": "string"
+            }
+          },
+          {
+            "id": "deployment_details_endpoint",
+            "method": "GET",
+            "path": "/api/deployment/{deployment_id}",
+            "description": "Fetch specific deployment details",
+            "path_params": [
+              {
+                "id": "param_deployment_id",
+                "name": "deployment_id",
+                "type": "string",
+                "description": "Unique deployment identifier"
+              }
+            ],
+            "response": {
+              "id": "response_deployment",
+              "deployment": "object"
+            }
+          }
+        ],
+        "chat": [
+          {
+            "id": "chat_endpoint",
+            "method": "POST",
+            "path": "/api/chat/ask",
+            "description": "AI chat assistance endpoint",
+            "body_params": [
+              {
+                "id": "param_question",
+                "name": "question",
+                "type": "string",
+                "description": "User question for AI assistance"
+              }
+            ],
+            "response": {
+              "id": "response_chat",
+              "answer": "string",
+              "conversation_id": "string",
+              "total_tokens": "integer",
+              "cost": "number"
+            }
+          }
+        ]
+      },
+      "chat_features": {
+        "id": "chat_features",
+        "cloud_assist": {
+          "id": "cloud_assist",
+          "description": "Sidebar chat interface with AI assistance",
+          "features": [
+            "Toggle with sparkle icon in header",
+            "Minimizable sidebar",
+            "Real-time typing indicators",
+            "Auto-scroll to latest messages",
+            "Error handling for API failures",
+            "Message history management"
+          ]
+        },
+        "assist_console": {
+          "id": "assist_console",
+          "description": "Floating chat interface at bottom center",
+          "features": [
+            "Appears at bottom center of screen",
+            "Can be moved to sidebar",
+            "Closable with X button",
+            "Same chat functionality as CloudAssist"
+          ]
+        }
+      },
+      "deployment": {
+        "id": "deployment",
+        "docker": {
+          "id": "docker",
+          "enabled": true,
+          "dockerfile": "Dockerfile",
+          "dockerignore": ".dockerignore",
+          "image": "node:20-slim",
+          "port": 3003,
+          "environment": {
+            "id": "environment",
+            "NODE_ENV": "production",
+            "PORT": 3003,
+            "NEXT_PUBLIC_API_URL": "http://172.16.10.4:5005/api",
+            "NEXT_PUBLIC_API_SECRET": "S1qWmeKmDJV9ye+q/91l88lj6vqzfT5sembmutr6afv0lRcsL9cEtgwN"
+          }
+        },
+        "pm2": {
+          "id": "pm2",
+          "name": "appfoundry",
+          "script": "npm",
+          "args": "start",
+          "instances": 1,
+          "exec_mode": "fork"
+        },
+        "build_commands": [
+          "npm install",
+          "npm run build"
+        ],
+        "start_commands": [
+          "npm start",
+          "pm2-runtime pm2.json"
+        ],
+        "environment_variables": [
+          "NEXT_PUBLIC_BACKEND_API_BASE_URL",
+          "API_KEY (for Sify AI Platform)"
+        ]
+      },
+      "automation_commands": {
+        "id": "automation_commands",
+        "start_development": {
+          "id": "start_development",
+          "command": "npm run dev",
+          "description": "Start development server on port 3003",
+          "working_directory": "/home/durai/AIPLATFORM/Appfoundry"
+        },
+        "start_production": {
+          "id": "start_production",
+          "command": "docker build -t appfoundry . && docker run -p 3003:3003 appfoundry",
+          "description": "Build and run production Docker container",
+          "working_directory": "/home/durai/AIPLATFORM/Appfoundry"
+        },
+        "install_dependencies": {
+          "id": "install_dependencies",
+          "command": "npm install",
+          "description": "Install Node.js dependencies",
+          "working_directory": "/home/durai/AIPLATFORM/Appfoundry"
+        },
+        "build_application": {
+          "id": "build_application",
+          "command": "npm run build",
+          "description": "Build the Next.js application",
+          "working_directory": "/home/durai/AIPLATFORM/Appfoundry"
+        }
+      },
+      "features": [
+        "Blueprint browsing and deployment",
+        "AI chat assistance",
+        "Real-time deployment status tracking",
+        "Search functionality for application cards",
+        "Responsive design",
+        "Dark/light theme support"
+      ],
+              "file_structure": {
+          "id": "file_structure",
+          "app": [
+            "page.tsx (Home page)",
+            "layout.tsx (Root layout)",
+            "globals.css (Global styles)",
+            "my-blueprints/page.tsx (Blueprints management)",
+            "details/[id]/page.tsx (Application details page)",
+            "api/ (API routes)"
+          ],
+          "components": {
+            "id": "components",
+            "main": [
+              "Header.tsx",
+              "Sidebar.tsx",
+              "BlueprintsSection.tsx",
+              "CloudAssist.tsx",
+              "AssistConsole.tsx",
+              "ApplicationCard.tsx",
+              "DeployModal.tsx",
+              "SearchBar.tsx"
+            ],
+            "ui": [
+              "ui/ (UI components)"
+            ]
+          },
+        "public": {
+          "id": "public",
+          "data": [
+            "app.data/blueprints/ (Blueprint assets)",
+            "app.data/appfoundrymetadata.yaml",
+            "images/ (Static images)"
+          ]
+        },
+        "lib": [
+          "yaml-loader.ts (Data loading utilities)"
+        ],
+        "data": [
+          "Blueprint-specific data directories"
+        ]
+      },
+      "summary": {
+        "id": "summary",
+        "total_pages": 3,
+        "total_blueprints": 10,
+        "api_endpoints": 6,
+        "chat_features": 2,
+        "deployment_options": "Docker, PM2",
+        "framework": "Next.js with TypeScript",
+        "responsive_design": true,
+        "real_time_features": true,
+        "interactive_playground": false
+      }
+    }
+
+}
